@@ -34,8 +34,7 @@ const client = new MongoClient(url, {
 
       try {
         await todo.insertOne(todos);
-
-        return res.status(200).json({
+		  return res.status(200).json({
           message: "insert successfull",
         });
       } catch (error) {
