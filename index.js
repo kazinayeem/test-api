@@ -8,6 +8,8 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+//Promise = global.Promise;
+
 const client = new MongoClient(url, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
