@@ -23,19 +23,7 @@ client
 
     // 
 
-
- app.get("/", async (req, res) => {
-      try {
-        const data = await todo.find({});
-        const result = await data.toArray();
-        res.send(result);
-      } catch (error) {
-        return res.status(500).json({
-          message: "error",
-        });
-      }
-    });
-    app.post("/", async (req, res) => {
+ app.post("/", async (req, res) => {
       const todos = req.body;
 
       try {
@@ -50,6 +38,18 @@ client
         });
       }
     });
+ app.get("/", async (req, res) => {
+      try {
+        const data = await todo.find({});
+        const result = await data.toArray();
+        res.send(result);
+      } catch (error) {
+        return res.status(500).json({
+          message: "error",
+        });
+      }
+    });
+   
 
    
 
