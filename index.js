@@ -53,18 +53,18 @@ client
 
    
 
-//     app.get("/:id", async (req, res) => {
-//       const id = ObjectId(req.params.id);
-//       try {
-//         const data = await todo.find({ _id: id });
-//         const result = await data.toArray();
-//         res.send(result);
-//       } catch (error) {
-//         return res.status(500).json({
-//           message: "error",
-//         });
-//       }
-//     });
+    app.get("/:id", async (req, res) => {
+      const id = ObjectId(req.params.id);
+      try {
+        const data = await todo.find({ _id: id });
+        const result = await data.toArray();
+        res.send(result);
+      } catch (error) {
+        return res.status(500).json({
+          message: "error",
+        });
+      }
+    });
 
     app.delete("/:id", async (req, res) => {
       const id = ObjectId(req.params.id);
