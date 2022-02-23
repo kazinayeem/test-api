@@ -13,17 +13,23 @@ const client = new MongoClient(url, {
   useUnifiedTopology: true,
 });
 
-client
+const funconnecteddata = async () => {
+  try {
+    await client
       .connect()
-   
+      .then((res) => {
+        console.log("Connected");
+      })
+      .catch((err) => {
+        console.log("Error", err);
+      });
 
     //    database
     const database = client.db("testing");
     const todo = database.collection("todo");
 
-    // 
-
- app.post("/", async (req, res) => {
+    // routing
+    app.post("/", async (req, res) => {
       const todos = req.body;
 
       try {
@@ -38,7 +44,8 @@ client
         });
       }
     });
- app.get("/", async (req, res) => {
+
+    app.get("/", async (req, res) => {
       try {
         const data = await todo.find({});
         const result = await data.toArray();
@@ -49,9 +56,6 @@ client
         });
       }
     });
-   
-
-   
 
     app.get("/:id", async (req, res) => {
       const id = ObjectId(req.params.id);
@@ -80,6 +84,10 @@ client
         });
       }
     });
-  
+  } catch (error) {
+    console.log("error",);
+  }
+};
 
+funconnecteddata();
 app.listen(process.env.PORT);
