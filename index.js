@@ -12,14 +12,11 @@ const client = new MongoClient(url, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
- client
-      .connect()
-    
-    //    database
+
+ client.connect()
     const database = client.db("testing");
     const todo = database.collection("todo");
 
-    // routing
     
      app.get("/", async (req, res) => {
       try {
@@ -78,4 +75,4 @@ const client = new MongoClient(url, {
       }
     });
 
-app.listen(process.env.PORT);
+app.listen();
