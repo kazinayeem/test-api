@@ -29,6 +29,17 @@ const funconnecteddata = async () => {
     const todo = database.collection("todo");
 
     // routing
+      app.get("/", async (req, res) => {
+      try {
+        const data = await todo.find({});
+        const result = await data.toArray();
+        res.send(result);
+      } catch (error) {
+        return res.status(500).json({
+          message: "error",
+        });
+      }
+    });
     app.post("/", async (req, res) => {
       const todos = req.body;
 
@@ -45,17 +56,7 @@ const funconnecteddata = async () => {
       }
     });
 
-    app.get("/", async (req, res) => {
-      try {
-        const data = await todo.find({});
-        const result = await data.toArray();
-        res.send(result);
-      } catch (error) {
-        return res.status(500).json({
-          message: "error",
-        });
-      }
-    });
+  
 
     app.get("/:id", async (req, res) => {
       const id = ObjectId(req.params.id);
