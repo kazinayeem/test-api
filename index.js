@@ -12,10 +12,7 @@ const client = new MongoClient(url, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
-
-const funconnecteddata = async () => {
-  try {
-    await client
+ client
       .connect()
       .then((res) => {
         console.log("Connected");
@@ -86,10 +83,5 @@ const funconnecteddata = async () => {
         });
       }
     });
-  } catch (error) {
-    console.log("error",);
-  }
-};
 
-funconnecteddata();
 app.listen(process.env.PORT);
