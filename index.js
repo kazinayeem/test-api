@@ -15,18 +15,26 @@ const client = new MongoClient(url, {
 
 client
       .connect()
-      .then((res) => {
-        console.log("Connected");
-      })
-      .catch((err) => {
-        console.log("Error", err);
-      });
+   
 
     //    database
     const database = client.db("testing");
     const todo = database.collection("todo");
 
-    // routing
+    // 
+
+
+ app.get("/", async (req, res) => {
+      try {
+        const data = await todo.find({});
+        const result = await data.toArray();
+        res.send(result);
+      } catch (error) {
+        return res.status(500).json({
+          message: "error",
+        });
+      }
+    });
     app.post("/", async (req, res) => {
       const todos = req.body;
 
@@ -43,30 +51,20 @@ client
       }
     });
 
-    app.get("/", async (req, res) => {
-      try {
-        const data = await todo.find({});
-        const result = await data.toArray();
-        res.send(result);
-      } catch (error) {
-        return res.status(500).json({
-          message: "error",
-        });
-      }
-    });
+   
 
-    app.get("/:id", async (req, res) => {
-      const id = ObjectId(req.params.id);
-      try {
-        const data = await todo.find({ _id: id });
-        const result = await data.toArray();
-        res.send(result);
-      } catch (error) {
-        return res.status(500).json({
-          message: "error",
-        });
-      }
-    });
+//     app.get("/:id", async (req, res) => {
+//       const id = ObjectId(req.params.id);
+//       try {
+//         const data = await todo.find({ _id: id });
+//         const result = await data.toArray();
+//         res.send(result);
+//       } catch (error) {
+//         return res.status(500).json({
+//           message: "error",
+//         });
+//       }
+//     });
 
     app.delete("/:id", async (req, res) => {
       const id = ObjectId(req.params.id);
