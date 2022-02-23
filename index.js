@@ -13,12 +13,39 @@ const client = new MongoClient(url, {
   useUnifiedTopology: true,
 });
 
- client.connect()
+const funconnecteddata = async () => {
+  try {
+    await client
+      .connect()
+      .then((res) => {
+        console.log("Connected");
+      })
+      .catch((err) => {
+        console.log("Error", err);
+      });
+
+    //    database
     const database = client.db("testing");
     const todo = database.collection("todo");
 
-    
-     app.get("/", async (req, res) => {
+    // routing
+    app.post("/", async (req, res) => {
+      const todos = req.body;
+
+      try {
+        await todo.insertOne(todos);
+
+        return res.status(200).json({
+          message: "insert successfull",
+        });
+      } catch (error) {
+        return res.status(500).json({
+          message: "error",
+        });
+      }
+    });
+
+    app.get("/", async (req, res) => {
       try {
         const data = await todo.find({});
         const result = await data.toArray();
@@ -29,22 +56,6 @@ const client = new MongoClient(url, {
         });
       }
     });
-    app.post("/", async (req, res) => {
-      const todos = req.body;
-
-      try {
-        await todo.insertOne(todos);
-		  return res.status(200).json({
-          message: "insert successfull",
-        });
-      } catch (error) {
-        return res.status(500).json({
-          message: "error",
-        });
-      }
-    });
-
-   
 
     app.get("/:id", async (req, res) => {
       const id = ObjectId(req.params.id);
@@ -73,5 +84,12 @@ const client = new MongoClient(url, {
         });
       }
     });
+  } catch (error) {
+    console.log("error",);
+  }
 
+ 
+};
+ client.close();
+funconnecteddata()
 app.listen(process.env.PORT);
