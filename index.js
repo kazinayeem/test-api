@@ -14,13 +14,7 @@ const client = new MongoClient(url, {
 });
  client
       .connect()
-      .then((res) => {
-        console.log("Connected");
-      })
-      .catch((err) => {
-        console.log("Error", err);
-      });
-
+    
     //    database
     const database = client.db("testing");
     const todo = database.collection("todo");
