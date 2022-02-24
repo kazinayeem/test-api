@@ -29,8 +29,6 @@ const funconnecteddata = async () => {
     //    database
     const database = client.db("testing");
     const todo = database.collection("todo");
-
-    // routing
       app.get("/", async (req, res) => {
       try {
         const data = await todo.find({});
